@@ -1,51 +1,24 @@
 import {
-    HoverCard,
     Group,
-    Button,
-    UnstyledButton,
     Text,
-    SimpleGrid,
-    ThemeIcon,
-    Anchor,
-    Divider,
-    Tooltip,
     Box,
-    Burger,
-    Drawer,
-    Collapse,
-    ScrollArea,
-    rem,
-    TextInput,
     Container,
   } from '@mantine/core';
-  import { useState } from 'react';
-  import { useDisclosure } from '@mantine/hooks';
-  import {
-    IconHome2,
-  IconGauge,
-  IconDeviceDesktopAnalytics,
-  IconFingerprint,
-  IconCalendarStats,
-  IconUser, IconSearch,
-  } from '@tabler/icons-react';
-  import classes from './MantineHeader.module.css';
+import classes from './MantineHeader.module.css';
 import { ConnectKitButton } from 'connectkit';
 import Link from 'next/link';
 import { SearchUsers } from '@/components/Search/SearchUser';
 
 
-
 const links = [
   { link: '/', label: 'Home' },
-  { link: '/explore', label: 'Explore' },
   { link: '/profile', label: 'Profile' },
-  
+  { link: '/gho', label: 'GHO' },
 ];
 
-  
+
   export function MantineHeader() {
-    const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-    const [active, setActive] = useState(links[0].link);
+   
 
     const items = links.map((link) => (
       <Link
@@ -77,6 +50,7 @@ const links = [
               {/* @ts-ignore */}
             <SearchUsers />
 
+            
             <ConnectKitButton />
             </Group>
   
