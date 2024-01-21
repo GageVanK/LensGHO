@@ -105,7 +105,8 @@ const incentiveDataProviderContract = new UiIncentiveDataProvider({
 
     // @ts-ignore
     setReserveData(formattedGhoReserveData);
-    console.log(formattedPoolReserves)
+    console.log(formattedGhoReserveData)
+    
   }
 
   const facilitatorMintedPercentage = Math.round(reserveData?.aaveFacilitatorMintedPercent * 100);

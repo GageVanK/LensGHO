@@ -1,6 +1,8 @@
 'use client'
 import {
     useProfile,
+    useRevenueFromPublications,
+    useRevenueFromFollow
   } from "@lens-protocol/react-web";
   import {
     Space,
@@ -31,9 +33,13 @@ export default function ProfilePage({
         forHandle: `lens/${params.handle}`,
       });
 
-      console.log(profile)
+      const publicationEarnings = useRevenueFromFollow({
+        // @ts-ignore
+        for: profile?.data?.id,
+      });
 
-       // Assuming data.createdAt is a string representing the timestamp
+      console.log(publicationEarnings)
+
        // @ts-ignore
   const createdAtDate = new Date(profile?.data?.createdAt);
 
@@ -59,12 +65,192 @@ export default function ProfilePage({
     return(
         <>
         
-       
+        <Container>
+        <Card shadow="sm" padding="lg" radius="md" withBorder>
+          <Card.Section>
+            
+            <Image
+              // @ts-ignore
+              alt={`${profile?.data?.handle?.localName}'s cover photo`}
+              // @ts-ignore, image is there
+              src={profile?.data?.metadata?.coverPicture?.optimized?.uri}
+              height={333}
+              fallbackSrc="https://pbs.twimg.com/profile_banners/1623341641149939713/1704475311/1500x500"
+            />
+          </Card.Section>
 
-  
-       
+      <Group>
+          <>
+          <Avatar
+            alt={`${profile?.data?.handle?.localName}'s profile picture`}
+            // @ts-ignore, image is there
+            src={
+              profile?.data?.metadata?.picture &&
+              "optimized" in profile?.data?.metadata?.picture
+                ? profile?.data?.metadata?.picture.optimized?.uri
+                : "https://gw.ipfs-lens.dev/ipfs/bafybeidkewnnnisaqmwk7ornt6fymjddlkhlou2tsfhaxxnird4w4yrebe"
+            }
+            className={styles.avatar}
+            size={123}
+            radius="md"
+           
+            mt={-55}
+          />
+          </>
 
+       
+     
+
+          <div>
          
+            <Text fw={500}>{profile?.data?.metadata?.displayName}</Text>
+          
+@{profile?.data?.handle?.localName}
+          </div>
+          </Group>
+          <Space h="xl" />
+
+     
+
+
+
+            {profile?.data?.metadata?.bio && (
+              <>
+
+          <Paper p="lg" radius="md">
+            <Text
+              fz="lg"
+              style={{
+                maxWidth: "100%",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                textAlign: "center",
+              }}
+              dangerouslySetInnerHTML={{
+                __html:
+                  profile &&
+                  profile.data &&
+                  profile.data.metadata &&
+                  profile.data.metadata.bio
+                    ? replaceURLs(
+                        profile.data.metadata.bio.replace(/\n/g, "<br> "),
+                      )
+                    : "",
+              }}
+            />
+
+<Space h="xl" />
+
+<SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }}
+      spacing={{ base: 10, sm: 'xl' }}
+      verticalSpacing={{ base: 'md', sm: 'xl' }} >
+
+      <Paper shadow="sm" p="lg" radius="md" >
+          <Text fw={500} size="lg" ta="center">
+               Created On
+              </Text>
+              <Text fw={500} c="dimmed" ta="center">
+              {formattedCreatedAt}
+              </Text>
+              </Paper>
+     
+      <Paper shadow="sm" p="lg" radius="md" >
+          <Text fw={500} size="lg" ta="center">
+               Followers
+              </Text>
+              <Text fw={500} c="dimmed" ta="center">
+                {profile?.data?.stats.followers}
+              </Text>
+              </Paper>
+   
+      <Paper shadow="sm" p="lg" radius="md" >
+              <Text fw={500} size="lg" ta="center">
+               Following
+              </Text>
+              <Text fw={500} c="dimmed" ta="center">
+                {profile?.data?.stats.following}
+              </Text>
+              </Paper>
+
+
+      <Paper shadow="sm" p="lg" radius="md" >
+              <Text fw={500} size="lg" ta="center">
+               Publications
+              </Text>
+              <Text fw={500} c="dimmed" ta="center">
+                {profile?.data?.stats.publications}
+              </Text>
+              </Paper>
+      
+      <Paper shadow="sm" p="lg" radius="md" >
+              <Text fw={500} size="lg" ta="center">
+               Upvotes
+              </Text>
+              <Text fw={500} c="dimmed" ta="center">
+                {profile?.data?.stats.upvotes}
+              </Text>
+              </Paper>
+     
+      <Paper shadow="sm" p="lg" radius="md" >
+              <Text fw={500} size="lg" ta="center">
+               Comments
+              </Text>
+              <Text fw={500} c="dimmed" ta="center">
+                {profile?.data?.stats.comments}
+              </Text>
+              </Paper>
+     
+      <Paper shadow="sm" p="lg" radius="md" >
+              <Text fw={500} size="lg" ta="center">
+               Mirror
+              </Text>
+              <Text fw={500} c="dimmed" ta="center">
+                {profile?.data?.stats.mirrors}
+              </Text>
+              </Paper>
+   
+      <Paper shadow="sm" p="lg" radius="md" >
+              <Text fw={500} size="lg" ta="center">
+               Collects
+              </Text>
+              <Text fw={500} c="dimmed" ta="center">
+                {profile?.data?.stats.collects}
+              </Text>
+              </Paper>
+    
+      <Paper shadow="sm" p="lg" radius="md" >
+              <Text fw={500} size="lg" ta="center">
+               Quotes
+              </Text>
+              <Text fw={500} c="dimmed" ta="center">
+                {profile?.data?.stats.quotes}
+              </Text>
+              </Paper>
+              {publicationEarnings?.data && (
+                 <Paper shadow="sm" p="lg" radius="md" >
+                  <Group justify="center">
+                  <Avatar size="md" radius="xl" src="https://polygonscan.com/token/images/wMatic_32.png" />
+                 <Text fw={500} size="lg" ta="center">
+                  Follow Earnings
+                 </Text>
+                 
+                 </Group>
+                 <Text fw={500} c="dimmed" ta="center">
+                   {publicationEarnings?.data[0]?.total?.value || 0} WMATIC
+                 </Text>
+                 </Paper>
+              )}
+             
+     
+    </SimpleGrid>
+
+
+          </Paper>
+
+          <Space h="xl" />
+          </>
+)}
+
         </Card>
         </Container>
 
