@@ -47,7 +47,7 @@ export const SearchUsers = ({ query }: SearchResultsProps) => {
           size="sm"
           placeholder="Search"
           variant="filled"
-          value={searchInput} // Set the value of the input field
+          value={searchInput} 
           onChange={(e) => {
             setSearchInput(e.target.value);
           }}
