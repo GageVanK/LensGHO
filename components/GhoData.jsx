@@ -125,9 +125,7 @@ export async function fetchContractData() {
   }
 
   console.log({
-    formattedGhoReserveData,
     formattedGhoUserData,
-    formattedPoolReserves,
     formattedUserSummary,
   });
 }
